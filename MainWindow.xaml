@@ -18,7 +18,6 @@
         <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}" CanExecute="MaximizeCanExecute" Executed="MaximizeExecute" />
         <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="RestoreCanExecute" Executed="RestoreExecute" />
         <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}" CanExecute="MinimizeCanExecute" Executed="MinimizeExecute" />
-        <CommandBinding Command="{x:Static SystemCommands.ShowSystemMenuCommand}" CanExecute="ShowSystemMenuCanExecute" Executed="ShowSystemMenuExecute" />
     </Window.CommandBindings>
 
         <Border Style="{StaticResource WindowBorderMaximize}">
