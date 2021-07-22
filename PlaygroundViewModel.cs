@@ -11,16 +11,26 @@ namespace GUI_Playground
     {
         public PlaygroundViewModel()
         {
+            WelcomeMessage = "Work In Progress";
             SimulateProgress = new RelayCommand(_ => DoSimulateProgress(), _ => CanRunProgressBarTask);
             GoButton = new RelayCommand(_ => DoAddStar(), _ => CanRunProgressBarTask);
         }
 
-
+        private string _welcomeMessage;
         private int _progress;
         private bool _canRunProgressBarTask = true;
         private RelayCommand _simulateProgress;
         private string _twoWayTextBox;
         private RelayCommand _goButton;
+
+        public string WelcomeMessage
+        {
+            get => _welcomeMessage;
+            set
+            {
+                _welcomeMessage = value;
+            }
+        }
 
         public int Progress
         {
