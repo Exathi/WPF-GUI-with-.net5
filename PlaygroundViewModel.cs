@@ -9,28 +9,22 @@ namespace GUI_Playground
 {
     class PlaygroundViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Create GUI welcome message and button commands on new
+        /// </summary>
         public PlaygroundViewModel()
         {
             WelcomeMessage = "Work In Progress";
             SimulateProgress = new RelayCommand(_ => DoSimulateProgress(), _ => CanRunProgressBarTask);
-            GoButton = new RelayCommand(_ => DoAddStar(), _ => CanRunProgressBarTask);
+            GoButton = new RelayCommand(_ => DoAddStar(), _ => true);
+            SendButton = new RelayCommand(_ => DoAddHistory(), _ => CanSendToHistory);
         }
 
-        private string _welcomeMessage;
         private int _progress;
-        private bool _canRunProgressBarTask = true;
-        private RelayCommand _simulateProgress;
         private string _twoWayTextBox;
-        private RelayCommand _goButton;
+        private string _historyTextBox;
 
-        public string WelcomeMessage
-        {
-            get => _welcomeMessage;
-            set
-            {
-                _welcomeMessage = value;
-            }
-        }
+        public string WelcomeMessage { get; set; }
 
         public int Progress
         {
@@ -42,25 +36,15 @@ namespace GUI_Playground
             }
         }
 
-        public bool CanRunProgressBarTask
-        {
-            get => _canRunProgressBarTask;
-            set
-            {
-                _canRunProgressBarTask = value;
-                NotifyPropertyChanged();
-            }
-        }
+        /// <summary>
+        /// Check if task is able to run with progress bar
+        /// </summary>
+        public bool CanRunProgressBarTask { get; set; } = true;
 
-        public RelayCommand SimulateProgress
-        {
-            get => _simulateProgress;
-            set
-            {
-                _simulateProgress = value;
-                NotifyPropertyChanged();
-            }
-        }
+        /// <summary>
+        /// Creates an async task that uses the progress bar
+        /// </summary>
+        public RelayCommand SimulateProgress { get; set; }
 
         private async void DoSimulateProgress()
         {
@@ -89,6 +73,10 @@ namespace GUI_Playground
             //CommandManager.InvalidateRequerySuggested();
         }
 
+        /// <summary>
+        /// Adds * to a string
+        /// </summary>
+        public RelayCommand GoButton { get; set; }
         public string TwoWayTextBox
         {
             get => _twoWayTextBox;
@@ -98,22 +86,37 @@ namespace GUI_Playground
                 NotifyPropertyChanged();
             }
         }
-
-
         private void DoAddStar()
         {
             TwoWayTextBox += '*';
         }
 
-        public RelayCommand GoButton
+        /// <summary>
+        /// Moves text from TwoWayTextBox to HistoryTextBox
+        /// </summary>
+        public RelayCommand SendButton { get; set; }
+
+        public bool CanSendToHistory { get; set; } = true;
+
+        public string HistoryTextBox
         {
-            get => _goButton;
+            get => _historyTextBox;
             set
             {
-                _goButton = value;
+                _historyTextBox = value;
                 NotifyPropertyChanged();
             }
         }
 
+        private void DoAddHistory()
+        {
+            HistoryTextBox += TwoWayTextBox;
+            TwoWayTextBox = null;
+        }
+
+        /// <summary>
+        /// Clears all textboxes and listview items
+        /// </summary>
+        public RelayCommand ClearButton { get; set; }
     }
 }
