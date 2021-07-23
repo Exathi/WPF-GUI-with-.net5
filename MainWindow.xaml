@@ -44,7 +44,7 @@
                 <RowDefinition Height="5"/>
                 <!--5 ProgressBar-->
                 <RowDefinition Height="30"/>
-                <!--6 ListBox-->
+                <!--6 ListView-->
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
