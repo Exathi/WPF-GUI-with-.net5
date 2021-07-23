@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GUI_Playground
@@ -18,8 +19,14 @@ namespace GUI_Playground
             SimulateProgress = new RelayCommand(_ => DoSimulateProgress(), _ => CanRunProgressBarTask);
             GoButton = new RelayCommand(_ => DoAddStar(), _ => true);
             SendButton = new RelayCommand(_ => DoAddHistory(), _ => CanSendToHistory);
+            ClearButton = new RelayCommand(_ => DoClear(), _ => true);
+            ActionList = new ObservableCollection<ActionHistory>();
+            ListCopy = new RelayCommand(_ => DoCopyActionList(), _ => true);
         }
 
+        /// <summary>
+        /// Properties that require NotifyPropertyChanged(); to update view
+        /// </summary>
         private int _progress;
         private string _twoWayTextBox;
         private string _historyTextBox;
@@ -36,6 +43,22 @@ namespace GUI_Playground
             }
         }
 
+        public ObservableCollection<ActionHistory> ActionList { get; set; }
+        private void DoAddActionToList(DateTime dateTime, string description)
+        {
+            ActionList.Add(new ActionHistory(dateTime, description));
+        }
+
+        public RelayCommand ListCopy { get; set; }
+        private void DoCopyActionList()
+        {
+            StringBuilder sb = new();
+            foreach (ActionHistory actionHistory in ActionList)
+            {
+                _ = sb.AppendLine($"{actionHistory.DateTime}\t{actionHistory.Description}");
+            }
+            Clipboard.SetText(sb.ToString());
+        }
         /// <summary>
         /// Check if task is able to run with progress bar
         /// </summary>
@@ -50,6 +73,9 @@ namespace GUI_Playground
         {
             CanRunProgressBarTask = false;
             SimulateProgress.RaiseCanExecuteChanged();
+
+            DoAddActionToList(DateTime.Now, "Start DoSimulateProgress");
+
             Random randomNumber = new();
             while (Progress < 100)
             {
@@ -70,6 +96,7 @@ namespace GUI_Playground
             Progress = 0;
             CanRunProgressBarTask = true;
             SimulateProgress.RaiseCanExecuteChanged();
+            DoAddActionToList(DateTime.Now, "End DoSimulateProgress");
             //CommandManager.InvalidateRequerySuggested();
         }
 
@@ -84,6 +111,16 @@ namespace GUI_Playground
             {
                 _twoWayTextBox = value;
                 NotifyPropertyChanged();
+                if (_twoWayTextBox.Length == 0)
+                {
+                    CanSendToHistory = false;
+                    SendButton.RaiseCanExecuteChanged();
+                }
+                else
+                {
+                    CanSendToHistory = true;
+                    SendButton.RaiseCanExecuteChanged();
+                }
             }
         }
         private void DoAddStar()
@@ -96,7 +133,7 @@ namespace GUI_Playground
         /// </summary>
         public RelayCommand SendButton { get; set; }
 
-        public bool CanSendToHistory { get; set; } = true;
+        public bool CanSendToHistory { get; set; }
 
         public string HistoryTextBox
         {
@@ -111,12 +148,19 @@ namespace GUI_Playground
         private void DoAddHistory()
         {
             HistoryTextBox += TwoWayTextBox;
-            TwoWayTextBox = null;
+            TwoWayTextBox = string.Empty;
         }
 
         /// <summary>
         /// Clears all textboxes and listview items
         /// </summary>
         public RelayCommand ClearButton { get; set; }
+
+        private void DoClear()
+        {
+            HistoryTextBox = string.Empty;
+            TwoWayTextBox = string.Empty;
+            ActionList.Clear();
+        }
     }
 }
