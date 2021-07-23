@@ -26,6 +26,9 @@ namespace GUI_Playground
             DataContext = new PlaygroundViewModel();
         }
 
+        /// <summary>
+        /// View buttons: Close, Maximize, Restore, Minimize
+        /// </summary>
         private void CloseCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
