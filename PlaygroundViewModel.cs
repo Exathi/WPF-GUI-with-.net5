@@ -16,12 +16,12 @@ namespace GUI_Playground
         public PlaygroundViewModel()
         {
             WelcomeMessage = "Work In Progress";
+            ActionList = new ObservableCollection<ActionHistory>();
+            ListCopy = new RelayCommand(_ => DoCopyActionList(), _ => true);
             SimulateProgress = new RelayCommand(_ => DoSimulateProgress(), _ => CanRunProgressBarTask);
             GoButton = new RelayCommand(_ => DoAddStar(), _ => true);
             SendButton = new RelayCommand(_ => DoAddHistory(), _ => CanSendToHistory);
             ClearButton = new RelayCommand(_ => DoClear(), _ => true);
-            ActionList = new ObservableCollection<ActionHistory>();
-            ListCopy = new RelayCommand(_ => DoCopyActionList(), _ => true);
         }
 
         /// <summary>
@@ -43,12 +43,18 @@ namespace GUI_Playground
             }
         }
 
+        /// <summary>
+        /// Log actions to display on view
+        /// </summary>
         public ObservableCollection<ActionHistory> ActionList { get; set; }
         private void DoAddActionToList(DateTime dateTime, string description)
         {
             ActionList.Add(new ActionHistory(dateTime, description));
         }
 
+        /// <summary>
+        /// Copy listview items
+        /// </summary>
         public RelayCommand ListCopy { get; set; }
         private void DoCopyActionList()
         {
@@ -59,6 +65,7 @@ namespace GUI_Playground
             }
             Clipboard.SetText(sb.ToString());
         }
+
         /// <summary>
         /// Check if task is able to run with progress bar
         /// </summary>
