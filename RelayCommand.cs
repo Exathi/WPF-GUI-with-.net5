@@ -3,6 +3,9 @@ using System.Windows.Input;
 
 namespace GUI_Playground
 {
+    /// <summary>
+    /// Button commands that need to be called to refresh enabled states
+    /// </summary>
     class RelayCommand : ICommand
     {
 
