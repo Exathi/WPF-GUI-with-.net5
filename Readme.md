@@ -1,2 +1,5 @@
 # .net5 and WPF
-This is a wip version for .net5 of [my powershell with WPF](https://github.com/Exathi/WPF-GUI-with-Powershell)
+This is C# version of [my powershell with WPF](https://github.com/Exathi/WPF-GUI-with-Powershell)
+
+# Was it easier in C#?
+This was easier in C# than in powershell. Lesson learned. If you can, use proper tools for the job.
