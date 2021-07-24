@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace GUI_Playground
 {
@@ -28,8 +26,8 @@ namespace GUI_Playground
         /// Properties that require NotifyPropertyChanged(); to update view
         /// </summary>
         private int _progress;
-        private string _twoWayTextBox;
-        private string _historyTextBox;
+        private readonly StringBuilder _twoWayTextBox = new();
+        private readonly StringBuilder _historyTextBox = new();
 
         public string WelcomeMessage { get; set; }
 
@@ -113,10 +111,12 @@ namespace GUI_Playground
         public RelayCommand GoButton { get; set; }
         public string TwoWayTextBox
         {
-            get => _twoWayTextBox;
+            get => _twoWayTextBox.ToString();
             set
             {
-                _twoWayTextBox = value;
+                int len = _twoWayTextBox.Length;
+                _ = _twoWayTextBox.Remove(0, len);
+                _ = _twoWayTextBox.Append(value);
                 NotifyPropertyChanged();
                 if (_twoWayTextBox.Length == 0)
                 {
@@ -144,17 +144,17 @@ namespace GUI_Playground
 
         public string HistoryTextBox
         {
-            get => _historyTextBox;
+            get => _historyTextBox.ToString();
             set
             {
-                _historyTextBox = value;
+                _historyTextBox.Append(value);
                 NotifyPropertyChanged();
             }
         }
 
         private void DoAddHistory()
         {
-            HistoryTextBox += TwoWayTextBox;
+            HistoryTextBox = TwoWayTextBox;
             TwoWayTextBox = string.Empty;
         }
 
@@ -165,8 +165,12 @@ namespace GUI_Playground
 
         private void DoClear()
         {
-            HistoryTextBox = string.Empty;
-            TwoWayTextBox = string.Empty;
+            //HistoryTextBox = string.Empty;
+            _historyTextBox.Clear();
+            NotifyPropertyChanged(HistoryTextBox);
+            //TwoWayTextBox = string.Empty;
+            _twoWayTextBox.Clear();
+            NotifyPropertyChanged(TwoWayTextBox);
             ActionList.Clear();
         }
     }
