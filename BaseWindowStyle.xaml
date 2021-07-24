@@ -5,7 +5,7 @@
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome
-                        CaptionHeight="{Binding ActualHeight, ElementName=RootWindow}"
+                        CaptionHeight="30"
                         ResizeBorderThickness="3"
                         CornerRadius="2"
                         NonClientFrameEdges="None"/>
