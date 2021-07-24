@@ -13,7 +13,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Grid">
+    <Style TargetType="Grid" x:Key="AppHeader">
         <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
     </Style>
 
