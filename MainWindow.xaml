@@ -49,7 +49,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="{StaticResource LightHeaderBrush}">
-                <Menu WindowChrome.IsHitTestVisibleInChrome="True" Margin="30,0,0,0">
+                <Menu WindowChrome.IsHitTestVisibleInChrome="True" Margin="30,0,0,0" Style="{StaticResource CustomMenu}">
                     <MenuItem Header="_File" Height="30" Width="Auto" Template="{DynamicResource MenuItemHeaderControlTemplate}">
                         <MenuItem Header="_Other" Template="{DynamicResource MenuItemSubMenuControlTemplate}"/>
                         <MenuItem Header="_Stuff" Template="{DynamicResource MenuItemSubMenuControlTemplate}"/>
@@ -81,7 +81,7 @@
             <TextBlock Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,0,0,0"
                 TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Red" FontSize="14" Text="{Binding WelcomeMessage}"/>
 
-            <GroupBox Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4" Header="Two Way Text Box">
+            <GroupBox Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4" Header="Two Way Text Box" BorderThickness="0">
                 <TextBox TextWrapping="Wrap" Text="{Binding TwoWayTextBox, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" MaxLength="1000"/>
             </GroupBox>
 
@@ -92,7 +92,7 @@
                 <Button Grid.Row="2" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" Content="Clear" HorizontalAlignment="Left" Command="{Binding ClearButton}"/>
             </StackPanel>
 
-            <GroupBox Grid.Row="3" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" Header="History">
+            <GroupBox Grid.Row="3" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" Header="History" BorderThickness="0">
                 <TextBox TextWrapping="Wrap" Text="{Binding HistoryTextBox}" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
             </GroupBox>
 
@@ -100,8 +100,8 @@
             <TextBlock Grid.Row="5" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Center" HorizontalAlignment="Center"
                 Text="{Binding Progress, StringFormat={}{0:0}%}"/>
 
-            <GroupBox Grid.Row="6" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="5" Header="Log">
-                <ListView x:Name="listViewLog" SelectionMode="Extended" ItemsSource="{Binding ActionList}">
+            <GroupBox Grid.Row="6" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="5" Header="Log" BorderThickness="0">
+                <ListView x:Name="listViewLog" SelectionMode="Extended" ItemsSource="{Binding ActionList}" Background="AliceBlue">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="TimeStamp" DisplayMemberBinding="{Binding DateTime}" Width="200"/>
