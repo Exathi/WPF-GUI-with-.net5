@@ -104,7 +104,7 @@
                 <ListView x:Name="listViewLog" SelectionMode="Extended" ItemsSource="{Binding ActionList}">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
-                            <GridViewColumn Header="TimeStamp" DisplayMemberBinding="{Binding DateTime}" Width="200"/>
+                            <GridViewColumn Header="TimeStamp" DisplayMemberBinding="{Binding Time}" Width="200"/>
                             <GridViewColumn Header="Log" DisplayMemberBinding="{Binding Description}" Width="200"/>
                         </GridView>
                     </ListView.View>
@@ -117,7 +117,7 @@
                                 Command="{Binding ListCopy}"/>
                             <MenuItem Header="_Remove"
                                 CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
-                                Command="{Binding listRemove}"/>
+                                Command="{Binding ListRemove}"/>
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
