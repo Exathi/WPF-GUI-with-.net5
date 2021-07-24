@@ -10,10 +10,10 @@ namespace GUI_Playground
     {
         public ActionHistory(DateTime dateTime, string description)
         {
-            DateTime = dateTime;
+            Time = dateTime;
             Description = description;
         }
-        public DateTime DateTime { get; set; }
+        public DateTime Time { get; set; }
         public string Description { get; set; }
     }
 }
