@@ -147,7 +147,7 @@ namespace GUI_Playground
             get => _historyTextBox.ToString();
             set
             {
-                _historyTextBox.Append(value);
+                _ = _historyTextBox.Append(value);
                 NotifyPropertyChanged();
             }
         }
@@ -166,10 +166,10 @@ namespace GUI_Playground
         private void DoClear()
         {
             //HistoryTextBox = string.Empty;
-            _historyTextBox.Clear();
+            _ = _historyTextBox.Clear();
             NotifyPropertyChanged(HistoryTextBox);
             //TwoWayTextBox = string.Empty;
-            _twoWayTextBox.Clear();
+            _ = _twoWayTextBox.Clear();
             NotifyPropertyChanged(TwoWayTextBox);
             ActionList.Clear();
         }
