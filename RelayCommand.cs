@@ -6,11 +6,11 @@ namespace GUI_Playground
     /// <summary>
     /// Button commands that need to be called to refresh enabled states
     /// </summary>
-    class RelayCommand : ICommand
+    class RelayCommand<T> : ICommand
     {
 
-        private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
+        private readonly Action<T> _execute;
+        private readonly Func<T, bool> _canExecute;
 
         public event EventHandler CanExecuteChanged;
         /*
@@ -20,7 +20,7 @@ namespace GUI_Playground
         }
         */
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
@@ -28,12 +28,12 @@ namespace GUI_Playground
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null || _canExecute(parameter);
+            return _canExecute == null || _canExecute((T)parameter);
         }
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+            _execute((T)parameter);
         }
 
         public void RaiseCanExecuteChanged()
