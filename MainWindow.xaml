@@ -48,7 +48,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid x:Name="RootWindow" Grid.Row="0" Grid.ColumnSpan="5" Background="{StaticResource LightHeaderBrush}">
+            <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="{StaticResource LightHeaderBrush}">
                 <Menu WindowChrome.IsHitTestVisibleInChrome="True" Margin="30,0,0,0">
                     <MenuItem Header="_File" Height="30" Width="Auto" Template="{DynamicResource MenuItemHeaderControlTemplate}">
                         <MenuItem Header="_Other" Template="{DynamicResource MenuItemSubMenuControlTemplate}"/>
@@ -82,7 +82,7 @@
                 TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Red" FontSize="14" Text="{Binding WelcomeMessage}"/>
 
             <GroupBox Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="4" Header="Two Way Text Box">
-                <TextBox TextWrapping="Wrap" Text="{Binding TwoWayTextBox, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding TwoWayTextBox, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.VerticalScrollBarVisibility="Auto" AcceptsReturn="True" MaxLength="1000"/>
             </GroupBox>
 
             <StackPanel Grid.Row="2" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="10,0,0,0">
