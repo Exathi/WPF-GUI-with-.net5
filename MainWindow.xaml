@@ -93,7 +93,7 @@
             </StackPanel>
 
             <GroupBox Grid.Row="3" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1" Header="History" BorderThickness="0">
-                <TextBox TextWrapping="Wrap" Text="{Binding HistoryTextBox}" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding HistoryTextBox}" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True" Background="LightGray"/>
             </GroupBox>
 
             <ProgressBar Grid.Row="5" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="5" Minimum="0" Maximum="100" Value="{Binding Progress}"/>
