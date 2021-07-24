@@ -3,6 +3,9 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace GUI_Playground
 {
@@ -15,11 +18,12 @@ namespace GUI_Playground
         {
             WelcomeMessage = "Work In Progress";
             ActionList = new ObservableCollection<ActionHistory>();
-            ListCopy = new RelayCommand(_ => DoCopyActionList(), _ => true);
-            SimulateProgress = new RelayCommand(_ => DoSimulateProgress(), _ => CanRunProgressBarTask);
-            GoButton = new RelayCommand(_ => DoAddStar(), _ => true);
-            SendButton = new RelayCommand(_ => DoAddHistory(), _ => CanSendToHistory);
-            ClearButton = new RelayCommand(_ => DoClear(), _ => true);
+            ListCopy = new RelayCommand<object>((commandparameter) => DoCopyActionList(commandparameter), _ => true);
+            ListRemove = new RelayCommand<object>((commandparameter) => DoRemoveAction(commandparameter), _ => true);
+            SimulateProgress = new RelayCommand<object>(_ => DoSimulateProgress(), _ => CanRunProgressBarTask);
+            GoButton = new RelayCommand<object>(_ => DoAddStar(), _ => true);
+            SendButton = new RelayCommand<object>(_ => DoAddHistory(), _ => CanSendToHistory);
+            ClearButton = new RelayCommand<object>(_ => DoClear(), _ => true);
         }
 
         /// <summary>
@@ -51,17 +55,40 @@ namespace GUI_Playground
         }
 
         /// <summary>
-        /// Copy listview items
+        /// Copy listview items by casting IList to param because System.Windows.Controls.SelectedItemCollection implements IList
         /// </summary>
-        public RelayCommand ListCopy { get; set; }
-        private void DoCopyActionList()
+        public RelayCommand<object> ListCopy { get; set; }
+        private static void DoCopyActionList(object param)
         {
             StringBuilder sb = new();
-            foreach (ActionHistory actionHistory in ActionList)
+
+            IList tmpIList = (IList)param;
+            List<ActionHistory> tmpList = tmpIList.Cast<ActionHistory>().ToList();
+            IOrderedEnumerable<ActionHistory> orderedActionHistory = tmpList.OrderBy(_ => _.Time);
+
+            foreach (ActionHistory actionHistory in orderedActionHistory)
             {
-                _ = sb.AppendLine($"{actionHistory.DateTime}\t{actionHistory.Description}");
+                _ = sb.AppendLine($"{actionHistory.Time}\t{actionHistory.Description}");
             }
             Clipboard.SetText(sb.ToString());
+        }
+
+        /// <summary>
+        /// Remove selected listview items
+        /// </summary>
+        public RelayCommand<object> ListRemove { get; set; }
+
+        private void DoRemoveAction(object param)
+        {
+            List<ActionHistory> actionHistories = new();
+            foreach (ActionHistory actionHistory in (IList)param)
+            {
+                actionHistories.Add(actionHistory);
+            }
+            foreach (ActionHistory actionHistory in actionHistories)
+            {
+                _ = ActionList.Remove(actionHistory);
+            }
         }
 
         /// <summary>
@@ -72,7 +99,7 @@ namespace GUI_Playground
         /// <summary>
         /// Creates an async task that uses the progress bar
         /// </summary>
-        public RelayCommand SimulateProgress { get; set; }
+        public RelayCommand<object> SimulateProgress { get; set; }
 
         private async void DoSimulateProgress()
         {
@@ -108,7 +135,7 @@ namespace GUI_Playground
         /// <summary>
         /// Adds * to a string
         /// </summary>
-        public RelayCommand GoButton { get; set; }
+        public RelayCommand<object> GoButton { get; set; }
         public string TwoWayTextBox
         {
             get => _twoWayTextBox.ToString();
@@ -138,7 +165,7 @@ namespace GUI_Playground
         /// <summary>
         /// Moves text from TwoWayTextBox to HistoryTextBox
         /// </summary>
-        public RelayCommand SendButton { get; set; }
+        public RelayCommand<object> SendButton { get; set; }
 
         public bool CanSendToHistory { get; set; }
 
@@ -156,12 +183,13 @@ namespace GUI_Playground
         {
             HistoryTextBox = TwoWayTextBox;
             TwoWayTextBox = string.Empty;
+            DoAddActionToList(DateTime.Now, "Sent to history");
         }
 
         /// <summary>
         /// Clears all textboxes and listview items
         /// </summary>
-        public RelayCommand ClearButton { get; set; }
+        public RelayCommand<object> ClearButton { get; set; }
 
         private void DoClear()
         {
