@@ -126,7 +126,7 @@
     <!-- Menu and MenuItem ControlTemplate
         https://stackoverflow.com/questions/24698755/how-to-change-the-background-of-the-menuitem-on-mouseover-in-wpf -->
 
-    <Style TargetType="Menu">
+    <Style TargetType="Menu" x:Key="CustomMenu">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
