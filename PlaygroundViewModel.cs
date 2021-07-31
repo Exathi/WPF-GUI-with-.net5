@@ -66,10 +66,16 @@ namespace GUI_Playground
             List<ActionHistory> tmpList = tmpIList.Cast<ActionHistory>().ToList();
             IOrderedEnumerable<ActionHistory> orderedActionHistory = tmpList.OrderBy(_ => _.Time);
 
-             _ = sb.AppendLine($"TimeStamp\tLog");
+            //_ = sb.AppendLine($"TimeStamp\tLog");
+            sb.Append("TimeStamp\t");
+            sb.Append("Log");
+            sb.AppendLine();
             foreach (ActionHistory actionHistory in orderedActionHistory)
             {
-                _ = sb.AppendLine($"{actionHistory.Time}\t{actionHistory.Description}");
+                //_ = sb.AppendLine($"{actionHistory.Time}\t{actionHistory.Description}");
+                sb.AppendFormat("{0}\t", actionHistory.Time);
+                sb.AppendFormat("{0}", actionHistory.Description);
+                sb.AppendLine();
             }
             Clipboard.SetText(sb.ToString());
         }
