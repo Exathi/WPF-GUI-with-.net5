@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace GUI_Playground
 {
-    class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged?view=net-5.0
         public event PropertyChangedEventHandler PropertyChanged;
